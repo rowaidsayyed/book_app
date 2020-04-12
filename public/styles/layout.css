@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Girassol&family=Lalezar&display=swap');
+@import url("./fonts/font-awesome.min.css");
+form{
+  width: 70%;
+  padding: 2%;
+  margin: 5%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+} 
+form .full{
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: darkgrey;
+  margin: 3% 0;
+  padding: 5%;
+}
+
+.titleOrAuthor{
+  margin: 1% 1% 2% 2%;
+  padding: 2%;
+
+}
+ input[type='text']{
+  display: block;
+  width: 100%;
+  border: none;
+  margin: 0;
+  padding: 5%;
+}
+button{
+  display: block;
+  width: 110%;
+  border: none;
+  margin: 0;
+  padding: 5%;
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}
+
+.bookShow{
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px 1%;
+  background-color: lightslategray;
+  padding: 5%;
+}
+
+span{
+  display: block;
+  text-align: center;
+  font-family: 'Girassol', cursive;
+}
+span .bookTitle{
+  font-family: 'Lalezar', cursive;
+}
+img{
+  width: 80%;
+  margin: 2%;
+}
+.leftalign{
+  text-align: left;
+}
+.icon:before{
+  font-family: FontAwesome;
+  color: aliceblue;
+}
+footer{
+  position: fixed;
+  bottom: 0px;
+  text-align: center;
+  width: 100%;
+}
+ul{
+  display: inline-block;
+}
+ul li{
+  display: inline-block;
+  margin: 5px;
+}
+a{
+  text-decoration: none;
+}

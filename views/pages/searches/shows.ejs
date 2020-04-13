@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- <link rel="stylesheet" href="/styles/layout.css"> -->
-  <link rel="stylesheet" href="/styles/base.css">
-  <link rel="stylesheet" href="/styles/layout.css">
-</head>
+
+<%- include('../../layout/head.ejs') %>
+<head>  <title>Data From API</title></head>
+
 <body>
-  <header>Best Books</header>
+  <%- include('../../layout/header.ejs') %>
   <main>
     <span>Search Result</span>
-    <% book.forEach(e =>{ %>
+    <% book.forEach((e,idx) =>{ %>
+      <form action="/books" method="post">
         <div class='bookShow'>
           <img src="<%=e.img%>">
           <span class='bookTitle'><%= e.title %></span>
@@ -20,10 +17,17 @@
           <span><%= e.authors %></span>
           <br>
           <span class='leftalign'><%=e.description%></span>
+          <!-- <span><%= idx%></span> -->
+          <br>
+          <input class='hidden' name='index' value='<%=idx%>'></input>
+            <button>Select this book</button>
+          </form>
+          
         </div>
     <% }); %>
   </main>
-  <footer></footer>
-
+  <%- include('../../layout/footer.ejs') %>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="../../../app.js"></script>
 </body>
 </html>

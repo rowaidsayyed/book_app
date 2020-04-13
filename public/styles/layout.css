@@ -60,7 +60,7 @@ span .bookTitle{
   font-family: 'Lalezar', cursive;
 }
 img{
-  width: 80%;
+  width: 40%;
   margin: 2%;
 }
 .leftalign{
@@ -85,4 +85,12 @@ ul li{
 }
 a{
   text-decoration: none;
+}
+
+.hidden{
+  display: none;
+}
+.aStyle{
+  width: 80%;
+  margin: 5%;
 }

@@ -2,22 +2,25 @@
 
 require('dotenv').config();
 
-const express = require('express');
-
 const PORT = process.env.PORT || 3000;
-const app = express();
+
+const express = require('express');
 const superagent = require('superagent');
+const methodOverride = require('method-override');
+const app = express();
 const pg = require('pg');
-// const cors = require('cors');
+
+
 const client = new pg.Client(process.env.DATABASE_URL);
-// app.use(cors());
 app.use(express.static('./public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
+app.use(methodOverride('_method'));
 var allBooks = [];
-var count =0;
+var count = 0;
+
 
 /*************************************************************************************************************** */
 app.get('/', getIndex);
@@ -32,13 +35,35 @@ app.post('/books', addToCollection);
 
 app.get('/error', errorHandler);
 
+app.get('*', notExist);
+
+app.put('/update/:bookId', updateInfo);
+app.delete('/delete/:bookId', deleteBook);
 /******************************************************************************************************************* */
+function updateInfo(req, res) {
+  console.log(req.body);
+  let { title, authors, description, img, isbn, bookshelf } = req.body;
+  let SQL = 'UPDATE books SET title=$1,authors=$2,description=$3,img=$4,isbn=$5,bookshelf=$6 WHERE id=$7;';
+
+  let safeValues = [title, authors, description, img, isbn, bookshelf, req.params.bookId];
+  client.query(SQL, safeValues)
+    .then(res.redirect(`/books/${req.params.bookId}`))
+
+}
+
+function deleteBook(req, res) {
+  count--;
+  let SQL = 'DELETE FROM books WHERE id=$1';
+  let value = [req.params.bookId];
+  client.query(SQL, value)
+    .then(res.redirect('/'))
+}
+
 function getIndex(req, res) {
-  let SQL = 'SELECT * FROM books;';
+  let SQL = 'SELECT * FROM books ORDER BY id ASC;';
   client.query(SQL)
     .then(results => {
       count = results.rows.length;
-      // console.log(count,'allllllllllllllll');
       res.render('pages/index', { books: results.rows });
     });
 }
@@ -60,11 +85,6 @@ function showSearchBooks(req, res) {
           return new Book(element);
         });
         res.render('pages/searches/shows', { book: allBooks });
-        // allBooks.forEach(e => {
-        //   let SQL = 'INSERT INTO books (title,author,discription,img)  VALUES ($1,$2,$3,$4)';
-        //   let safeValues = [e.title, e.authors, e.description, e.img];
-        //   client.query(SQL, safeValues).then();
-        // })
       }
       catch (err) {
         console.log(err);
@@ -74,32 +94,38 @@ function showSearchBooks(req, res) {
 }
 
 function moreDetails(req, res) {
+
+  let SQL1 = 'SELECT DISTINCT bookshelf FROM books;';
+  // let value1 = [req.params.bookId];
+  let all=[];
+  client.query(SQL1)
+    .then(results => {
+      // console.log('firrrrrrrrrst',results.rows);
+      return results.rows;
+    }).then(x => all=x )
+
   let SQL = 'SELECT * FROM books WHERE id=$1;';
   let value = [req.params.bookId];
   client.query(SQL, value)
     .then(results => {
-      res.render('pages/books/show', { book: results.rows[0] });
+      // console.log(all);
+      res.render('pages/books/show', { book: results.rows[0],shel:all});
     });
-
 }
 
 function addToCollection(req, res) {
   let idx = req.body.index;
-  // console.log(count,'vefooooooore');
   count++;
-  // console.log(count,'affffffffffffffffffffter');
-  // console.log(req.body.index, allBooks[idx]);
   let { title, authors, description, img, isbn, bookshelf } = allBooks[idx];
   let SQL = 'INSERT INTO books (title,authors,description,img,isbn,bookshelf)  VALUES ($1,$2,$3,$4,$5,$6)';
   let safeValues = [title, authors, description, img, isbn, bookshelf];
-  client.query(SQL, safeValues).then(() =>{
+  client.query(SQL, safeValues).then(() => {
     res.redirect(`/books/${count}`);
-    // res.render('pages/books/show', { book: allBooks[idx] });
   });
 
 }
 
-function errorHandler(req, res){
+function errorHandler(req, res) {
   res.render('pages/error');
 }
 
@@ -113,9 +139,10 @@ function Book(data) {
   this.bookshelf = data.volumeInfo.categories ? data.volumeInfo.categories[0] : 'No type found';
 }
 
-app.get('*', (req, res) => {
+
+function notExist(req, res) {
   res.status(404).send('This route does not exist!!');
-});
+}
 
 app.use((error, req, res) => {
   res.status(500).send(error);

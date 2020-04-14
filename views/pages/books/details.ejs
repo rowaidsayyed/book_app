@@ -7,4 +7,17 @@
   <p>Discription: <%= book.description%></p>
   <p>ISBN: <%= book.isbn%></p>
   <p>Bookshelf: <%= book.bookshelf%></p>
+
+  <div class="flex">
+    <button id="updateBtn" class="btnForm">update</button>
+    
+    <form action="/delete/<%=book.id%>?_method=delete" method="post" class="btnForm">
+      <button type="submit" class="btn">delete</button>
+    </form>
+  </div>
+
+ <section id='update_form'>
+   <%- include ('edit.ejs') %> 
+  </section> 
+
 </section>

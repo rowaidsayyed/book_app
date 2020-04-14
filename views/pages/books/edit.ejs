@@ -1,0 +1,41 @@
+
+
+
+<form action="/update/<%=book.id%>?_method=put" method="post">
+  <legend>Update data</legend>
+  
+  <label for="imgUrl">Img URL</label>
+  <input id="imgUrl" name="img" type="text" value="<%=book.img%>">
+  
+  <label for="title">Title</label>
+  <input id='title' name="title" type="text"  value="<%= book.title%>" >
+
+  <label for="author">Author</label>
+  <input id="author" name="authors" type="text" value="<%= book.authors%>">
+
+  <label for="ISBN">ISBN</label>
+  <input id="ISBN" name="isbn" type="text" value="<%= book.isbn%>">
+
+  <label for="description">description</label>
+  <textarea id="description" name="description" cols="30" rows="10"><%= book.description %></textarea>
+  
+  <label for="Bookshelf">Bookshelf</label>
+  <!-- <input id="Bookshelf" name="bookshelf" type="text" value="<%= book.bookshelf%>"> -->
+<!-- 
+  <select id="Bookshelf" name="bookshelf">
+   
+
+  </select> -->
+
+
+  <input required type="text" list="bookshelff" name='bookshelf' placeholder="Populate Bookshelf"/>
+<datalist id="bookshelff">
+  <% shel.forEach(e => { %>
+    <option value="<%= e.bookshelf%>"><%= e.bookshelf%></option>
+  <% }) %>
+</datalist>
+
+  <br>
+  <button type="submit">Update details</button>
+
+</form>

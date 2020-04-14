@@ -12,6 +12,7 @@
 
     <%books.forEach(e => { %>
       <div class='bookShow'>
+        <h6> <%= e.id%></h6>
         <img src="<%=e.img%>">
         <h3>Title: <%= e.title%></h3>
         <p> Author: <%= e.authors%></p>

@@ -8,6 +8,11 @@ form{
   justify-content: center;
   flex-direction: column;
 } 
+
+label{
+  margin: 10px 2px 5px 2px;
+
+}
 form .full{
   display: block;
   width: 100%;

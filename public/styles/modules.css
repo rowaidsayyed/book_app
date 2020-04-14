@@ -7,6 +7,15 @@ input[type="radio" i] {
   padding: initial;
   border: initial;
 }
+select{
+    display: inline-block;
+    text-align: start;
+    -webkit-appearance: menulist;
+    box-sizing: border-box;
+    align-items: center;
+    white-space: pre;
+    cursor: pointer;
+}
 
 header{
   height: 100px;
@@ -103,4 +112,24 @@ header{
   top: 18px;
   width: 0%;
   left: 50%;
+}
+
+.btnForm{
+width: 30%;
+margin: 0px;
+padding: 0px;
+}
+
+.btn{
+  width:100%
+}
+
+.flex{
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  margin: 5px;
+}
+#update_form{
+  width: 100%;
 }

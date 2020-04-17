@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('./layout/head.ejs') %>
+
+<head>
+  <title>Author</title>
+</head>
+
+<body>
+  <%- include('./layout/header.ejs') %>
+  <main>
+    <% bookshelvesData.forEach(e =>{ %>
+    <div class='bookShow'>
+      <h6> <%= e.id%></h6>
+      <h3>Name: <%= e.name%></h3>
+    </div>
+    <% }) %>
+
+
+  </main>
+  <%- include('./layout/footer.ejs') %>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

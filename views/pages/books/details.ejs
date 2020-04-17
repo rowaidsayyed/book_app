@@ -2,11 +2,12 @@
 
 <section class='bookShow'>
   <img src="<%=book.img%>">
+  <h2>id: <%= book.id%></h2>
   <h2>Title: <%= book.title%> </h2>
   <p>Author: <%= book.authors%></p>
   <p>Discription: <%= book.description%></p>
   <p>ISBN: <%= book.isbn%></p>
-  <p>Bookshelf: <%= book.bookshelf%></p>
+  <p>Bookshelf: <%= book.name%></p>
 
   <div class="flex">
     <button id="updateBtn" class="btnForm">update</button>

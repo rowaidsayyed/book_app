@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS books CASCADE;
 
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,
@@ -11,3 +11,4 @@ CREATE TABLE books (
 );
 
 INSERT INTO books (title,authors,description,img,isbn,bookshelf) VALUES ('my book','i am author','hahahahaha','https://via.placeholder.com/150',12315,'comedy');
+

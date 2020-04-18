@@ -17,13 +17,11 @@
           <span><%= e.authors %></span>
           <br>
           <span class='leftalign'><%=e.description%></span>
-          <!-- <span><%= idx%></span> -->
           <br>
           <input class='hidden' name='index' value='<%=idx%>'></input>
-            <button>Select this book</button>
-          </form>
-          
+          <button>Select this book</button>          
         </div>
+      </form>
     <% }); %>
   </main>
   <%- include('../../layout/footer.ejs') %>

@@ -70,9 +70,10 @@ function bookshelves(req, res) {
 // Update data for the selected book when open rout '/update/:bookId'
 function updateInfo(req, res) {
   let { title, authors, description, img, isbn, bookshelf } = req.body;
-  let SQL = 'UPDATE books SET title=$1,authors=$2,description=$3,img=$4,isbn=$5,bookshelf_id=(SELECT Id FROM bookshelves WHERE name =$6) WHERE id=$7;';
-  let safeValues = [title, authors, description, img, isbn, bookshelf, req.params.bookId];
-  return client.query(SQL, safeValues)
+
+  let SQL = 'UPDATE books SET title=$1,authors=$2,description=$3,img=$4,isbn=$5,bookshelf_id=(SELECT id2 FROM bookshelves where name=$6) WHERE id=$7;';
+  let safeValues = [title, authors, description, img, isbn,bookshelf,req.params.bookId];
+  client.query(SQL, safeValues)
     .then(res.redirect(`/books/${req.params.bookId}`))
 }
 
@@ -100,9 +101,7 @@ function showSearchBooks(req, res) {
   return superagent.get(url)
     .then(data => {
       try {
-        allBooks = data.body.items.map(element => {
-          return new Book(element);
-        });
+        allBooks = data.body.items.map(element => new Book(element));
         return res.render('pages/searches/shows', { book: allBooks });
       }
       catch (err) {
@@ -119,7 +118,7 @@ function moreDetails(req, res) {
   client.query(SQL1)
     .then(results => allbookshelf = results.rows)
 
-  let SQL = 'SELECT * FROM books JOIN bookshelves ON bookshelves.id=books.bookshelf_id WHERE books.id=$1;';
+  let SQL = 'SELECT * FROM books JOIN bookshelves ON bookshelves.id2=books.bookshelf_id WHERE books.id=$1;';
   let value = [req.params.bookId];
   return client.query(SQL, value)
     .then(results => res.render('pages/books/show', { book: results.rows[0], shel: allbookshelf }));
@@ -134,7 +133,7 @@ function addToCollection(req, res) {
   let values = [bookshelf];
   client.query(SQL, values).then();
 
-  SQL = 'INSERT INTO books (title,authors,description,img,isbn,bookshelf_id)  VALUES ($1,$2,$3,$4,$5,(SELECT Id FROM bookshelves WHERE name =$6))';
+  SQL = 'INSERT INTO books (title,authors,description,img,isbn,bookshelf_id)  VALUES ($1,$2,$3,$4,$5,(SELECT id2 FROM bookshelves WHERE name =$6))';
   values = [title, authors, description, img, isbn, bookshelf];
   client.query(SQL, values).then();
 
